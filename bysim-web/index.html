@@ -30,49 +30,29 @@
             min-height: 100vh;
         }
 
-        /* Navbar */
-        nav {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--glass-white);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 1rem 2rem;
-            z-index: 1000;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            max-width: 90%;
+        /* Logo in Hero */
+        .hero-logo {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .nav-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80px;
-        }
-
-        .logo {
+        .hero-logo img {
             height: 220px;
             width: auto;
             object-fit: contain;
             background: transparent;
         }
 
-        .nav-links {
-            display: none;
-        }
-
         /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
             padding: 2rem;
-            padding-top: 150px;
+            padding-top: 100px;
         }
 
         .hero-content {
@@ -512,21 +492,12 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav {
-                width: 95%;
-                padding: 0.8rem 1.5rem;
-            }
-
-            .nav-content {  
-                height: 150px;
-            }
-
-            .logo {
-                height: 320px;
+            .hero-logo img {
+                height: 450px;
             }
 
             .hero {
-                padding-top: 200px;
+                padding-top: 60px;
                 min-height: 80vh;
             }
 
@@ -610,15 +581,11 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav>
-        <div class="nav-content">
-            <img src="/static/images/logo.png" alt="bySim.ai" class="logo">
-        </div>
-    </nav>
-
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="hero-logo">
+            <img src="/static/images/logo.png" alt="bySim.ai">
+        </div>
         <div class="hero-content">
             <h1>Il Futuro del tuo Sito<br>è <span class="gradient-text">Qui</span></h1>
             <p>Digitalizza il tuo business</p>
@@ -658,7 +625,7 @@
                 <div class="pricing-container">
                     <div class="pricing-option primary">
                         <div class="price-badge">PIÙ POPOLARE</div>
-                        <div class="price-value">€49</div>
+                        <div class="price-value">€49,90</div>
                         <div class="price-period">al mese per 10 mesi</div>
                         <div class="price-total">Totale: €499</div>
                     </div>
@@ -686,7 +653,7 @@
                 <div class="pricing-container">
                     <div class="pricing-option primary">
                         <div class="price-badge">CONSIGLIATO</div>
-                        <div class="price-value">€49</div>
+                        <div class="price-value">€49,99</div>
                         <div class="price-period">al mese</div>
                         <div class="price-total">Fatturazione mensile</div>
                     </div>
