@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bySim.ai - Future of Website</title>
+    <title>bySim.ai - Future of AI</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
         }
 
         :root {
@@ -28,12 +34,14 @@
             color: var(--text-primary);
             overflow-x: hidden;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
 
         /* Logo in Hero */
         .hero-logo {
             text-align: center;
-            margin-bottom: 0.2rem;
+            margin-bottom: 1rem;
         }
 
         .hero-logo img {
@@ -49,10 +57,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             position: relative;
             padding: 1rem;
-            padding-top: 5px;
+            padding-top: 20px;
         }
 
         .hero-content {
@@ -492,13 +500,29 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .hero-logo {
+                margin: 0;
+                margin-bottom: 0.3rem;
+                padding: 0;
+            }
+            
             .hero-logo img {
-                height: 350px;
+                height: 300px;
             }
 
             .hero {
-                padding-top: 2px;
-                min-height: 80vh;
+                padding: 0;
+                padding-top: 10px;
+                margin: 0;
+                min-height: 90vh;
+            }
+
+            .hero-content h1 {
+                margin-bottom: 0.8rem;
+            }
+
+            .hero-content p {
+                margin-bottom: 1.2rem;
             }
 
             .mascot-container {
@@ -517,7 +541,7 @@
             .timeline-item {
                 flex-direction: column;
                 align-items: flex-start;
-                margin-bottom: 0.1rem;
+                margin-bottom: 2rem;
             }
 
             .timeline-content {
@@ -581,11 +605,13 @@
     </style>
 </head>
 <body>
+    <!-- Header Bar -->
+    <div class="header-bar">
+        <img src="/static/images/logo.png" alt="bySim.ai">
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-logo">
-            <img src="/static/images/logo.png" alt="bySim.ai">
-        </div>
         <div class="hero-content">
             <h1>Il Futuro del tuo Sito<br>è <span class="gradient-text">Qui</span></h1>
             <p>Digitalizza il tuo business</p>
