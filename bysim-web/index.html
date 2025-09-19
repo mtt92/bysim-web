@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bySim.ai - Future of AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #7B2CBF;
+            --pink: #FF006E;
+            --glass-white: rgba(255, 255, 255, 0.7);
+            --glass-dark: rgba(0, 0, 0, 0.05);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --bg-light: #F5F5F7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #F8F0FF 0%, #FFF0F8 25%, #F0F0FF 50%, #FFE8F5 75%, #F5F0FF 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            max-width: 90%;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple);
+            background: rgba(123, 44, 191, 0.1);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-secondary);
+            margin: 2px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: #1A1A1A;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: #333333;
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(123, 44, 191, 0.2);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(123, 44, 191, 0.3);
+        }
+
+        .cta-secondary {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            color: var(--purple);
+            padding: 1rem 2rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(123, 44, 191, 0.1);
+            border-color: var(--purple);
+            transform: translateY(-2px);
+        }
+
+        /* Mascot */
+        .mascot-container {
+            position: absolute;
+            right: 10%;
+            bottom: 10%;
+            width: 300px;
+            height: 300px;
+            opacity: 0.8;
+        }
+
+        .mascot {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(123, 44, 191, 0.5));
+            animation: levitate 6s ease-in-out infinite;
+        }
+
+        @keyframes levitate {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-30px) rotate(2deg); }
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cards-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(123, 44, 191, 0.3);
+            border-color: rgba(123, 44, 191, 0.5);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(123, 44, 191, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .card-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-features li::before {
+            content: '✦';
+            color: var(--purple);
+        }
+
+        .pricing-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .pricing-option {
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .pricing-option:hover {
+            border-color: var(--purple);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .pricing-option.primary {
+            border-color: var(--purple);
+            background: rgba(123, 44, 191, 0.05);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .price-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-total {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .price-savings {
+            text-align: center;
+            color: #28a745;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pricing-divider {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .pricing-divider::before,
+        .pricing-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .pricing-divider span {
+            padding: 0 1rem;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .card-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3);
+        }
+
+        .card-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(123, 44, 191, 0.4);
+        }
+
+        /* Timeline */
+        .timeline-section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding: 2rem;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            margin-left: 1rem;
+            transition: all 0.3s;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(123, 44, 191, 0.2);
+        }
+
+        .timeline-dot {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 20px rgba(123, 44, 191, 0.3);
+            flex-shrink: 0;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 2rem;
+            background: rgba(248, 240, 255, 0.5);
+        }
+
+        .features-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Quick CTA Section */
+        .quick-cta {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            text-align: center;
+            color: white;
+        }
+
+        .quick-cta .cta-content h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .quick-cta .cta-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .cta-quick {
+            display: inline-block;
+            background: white;
+            color: var(--purple);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-quick:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: #25D366;
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                width: 95%;
+                padding: 0.5rem 1rem;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--glass-border);
+                border-radius: 20px;
+                margin-top: 0.5rem;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.8rem 1rem;
+                border-radius: 15px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .mascot-container {
+                display: none;
+            }
+
+            .chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 140px);
+                right: 20px;
+                bottom: 90px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+
+            .timeline-content {
+                margin-left: 0 !important;
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .timeline-dot {
+                position: static;
+                transform: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <img src="/static/images/logo.png" alt="bySim.ai" class="logo">
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#prodotti">Prodotti</a></li>
+                <li><a href="#features">Features</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Il Futuro del tuo Sito<br>è <span class="gradient-text">Qui</span></h1>
+            <p>Digitalizza il tuo business</p>
+            <div class="cta-container">
+                <a href="#prodotti" class="cta-primary">Scopri i Prodotti</a>
+                <a href="#demo" class="cta-secondary">Richiedi Demo</a>
+            </div>
+        </div>
+        <div class="mascot-container">
+            <img src="/static/images/mascotte.png" alt="AI Assistant" class="mascot" id="mascot">
+        </div>
+    </section>
+
+    <!-- Quick CTA Section -->
+    <section class="quick-cta">
+        <div class="cta-content">
+            <h2>Hai 2 minuti? Parliamone subito!</h2>
+            <p>Contattaci ora per scoprire quale soluzione è perfetta per il tuo business</p>
+            <a href="https://wa.me/393441378445?text=Ciao!%20Vorrei%20sapere%20di%20più%20sui%20vostri%20servizi" class="cta-quick" target="_blank">
+                Scrivi su WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="prodotti">
+        <h2 class="section-title">I Nostri Servizi</h2>
+        <div class="cards-container">
+            <div class="glass-card">
+                <div class="card-icon">🌐</div>
+                <h3 class="card-title">Sito Internet</h3>
+                <p class="card-description">Sito web moderno e professionale, ottimizzato per conversioni e SEO</p>
+                <ul class="card-features">
+                    <li>Design responsive professionale</li>
+                    <li>Hosting e dominio inclusi</li>
+                    <li>Supporto tecnico completo</li>
+                </ul>
+                <div class="pricing-container">
+                    <div class="pricing-option primary">
+                        <div class="price-badge">PIÙ POPOLARE</div>
+                        <div class="price-value">€49,90</div>
+                        <div class="price-period">al mese per 10 mesi</div>
+                        <div class="price-total">Totale: €499</div>
+                    </div>
+                    <div class="pricing-divider">
+                        <span>oppure</span>
+                    </div>
+                    <div class="pricing-option secondary">
+                        <div class="price-value">€350</div>
+                        <div class="price-period">pagamento unico</div>
+                        <div class="price-savings">Risparmi €149!</div>
+                    </div>
+                </div>
+                <a href="https://wa.me/393441378445?text=Ciao!%20Vorrei%20informazioni%20sul%20Sito%20Internet%20(€49,90/mese%20per%2010%20mesi%20o%20€350%20una%20tantum)" class="card-cta" target="_blank">Richiedi Info</a>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-icon">🤖</div>
+                <h3 class="card-title">Chatbot AI</h3>
+                <p class="card-description">Assistente virtuale intelligente per il tuo sito web o business</p>
+                <ul class="card-features">
+                    <li>Risposte intelligenti 24/7</li>
+                    <li>Apprendimento continuo</li>
+                    <li>Personalizzazione completa</li>
+                </ul>
+                <div class="pricing-container">
+                    <div class="pricing-option primary">
+                        <div class="price-badge">CONSIGLIATO</div>
+                        <div class="price-value">€49,99</div>
+                        <div class="price-period">al mese</div>
+                        <div class="price-total">Fatturazione mensile</div>
+                    </div>
+                </div>
+                <a href="https://wa.me/393441378445?text=Ciao!%20Vorrei%20informazioni%20sul%20Chatbot%20AI%20a%20€49,99/mese" class="card-cta" target="_blank">Richiedi Info</a>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-icon">⭐</div>
+                <h3 class="card-title">Sito Plus</h3>
+                <p class="card-description">Soluzione premium con funzionalità avanzate e personalizzazioni su misura</p>
+                <ul class="card-features">
+                    <li>Design completamente personalizzato</li>
+                    <li>E-commerce integrato</li>
+                    <li>Integrazione AI avanzata</li>
+                    <li>Supporto prioritario dedicato</li>
+                </ul>
+                <div class="pricing-container">
+                    <div class="pricing-option primary">
+                        <div class="price-badge">PREMIUM</div>
+                        <div class="price-value">€1.000+</div>
+                        <div class="price-period">progetto</div>
+                        <div class="price-total">Preventivo personalizzato</div>
+                    </div>
+                </div>
+                <a href="https://wa.me/393441378445?text=Ciao!%20Vorrei%20informazioni%20sul%20Sito%20Plus%20personalizzato" class="card-cta" target="_blank">Richiedi Preventivo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 4rem;">Come Funziona</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Briefing del Progetto</h3>
+                    <p>Analizziamo insieme le tue esigenze, il target e gli obiettivi del tuo sito web</p>
+                </div>
+                <div class="timeline-dot">1</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Design & Prototipo</h3>
+                    <p>Creiamo il design personalizzato e la struttura del tuo sito</p>
+                </div>
+                <div class="timeline-dot">2</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Sviluppo & Ottimizzazione</h3>
+                    <p>Realizziamo il sito con codice pulito, responsive e veloce</p>
+                </div>
+                <div class="timeline-dot">3</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Lancio & Manutenzione</h3>
+                    <p>Mettiamo online il tuo sito e garantiamo supporto continuo</p>
+                </div>
+                <div class="timeline-dot">4</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 4rem;">Perché Sceglierci</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-number" data-target="100">0</div>
+                <div class="feature-label">Clienti Soddisfatti</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number" data-target="99.9">0</div>
+                <div class="feature-label">% Uptime</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number" data-target="24">0</div>
+                <div class="feature-label">Ore Supporto</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number" data-target="7">0</div>
+                <div class="feature-label">Giorni Settimana</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/393441378445?text=Ciao!%20Sono%20interessato%20ai%20vostri%20servizi%20web" class="whatsapp-fab" target="_blank">
+        <svg width="35" height="35" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+        </svg>
+    </a>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            navLinks.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('navLinks');
+                const toggle = document.querySelector('.mobile-menu-toggle');
+                navLinks.classList.remove('active');
+                toggle.classList.remove('active');
+            });
+        });
+
+        // Load saved theme
+        // Removed dark mode functionality
+
+        // Animated numbers
+        const animateNumbers = () => {
+            const numbers = document.querySelectorAll('.feature-number');
+            
+            numbers.forEach(num => {
+                const target = parseFloat(num.getAttribute('data-target'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (target === 99.9) {
+                            num.textContent = current.toFixed(1);
+                        } else {
+                            num.textContent = Math.floor(current);
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        if (target === 99.9) {
+                            num.textContent = target;
+                        } else if (target === 24) {
+                            num.textContent = target + '/7';
+                        } else if (target === 7) {
+                            num.textContent = target + '/7';
+                        } else {
+                            num.textContent = target + '+';
+                        }
+                    }
+                };
+                updateNumber();
+            });
+        };
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumbers();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Start observing
+        const featuresSection = document.querySelector('.features-grid');
+        if (featuresSection) {
+            observer.observe(featuresSection);
+        }
+
+        // Chat functionality
+        // Removed - replaced with WhatsApp button
+
+        // Mascot interaction
+        const mascot = document.getElementById('mascot');
+        if (mascot) {
+            mascot.addEventListener('mouseenter', () => {
+                mascot.style.transform = 'scale(1.2) rotate(10deg)';
+            });
+            
+            mascot.addEventListener('mouseleave', () => {
+                mascot.style.transform = '';
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
